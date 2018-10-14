@@ -1,6 +1,7 @@
 ﻿# **Dog or Frog Solution: A Unique (and Lazy) Approach to ML** (Or “The Bash Approach to Adversarial ML”)
 
 **Background**
+
 I suspect I addressed this problem from a very much unintended angle. Because our team had very little experience with Machine Learning, we decided not to focus too much on this problem because we all agreed learning ML was not really feasible within the time constraints of the competition. That being said, I still was curious. I did some research on the problem, and learned about ‘Adversarial Perturbations.’ Unfortunately for me, all of the guides I found online were not specific to MobileNet and I certainly didn’t have the expertise or time to figure out how to adapt one of the tutorials to work for this problem. However, I soon developed a very rough idea of how to solve the problem.
 
 
