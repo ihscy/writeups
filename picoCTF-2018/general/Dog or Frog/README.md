@@ -99,7 +99,7 @@ if __name__ == "__main__":
             print("score = {}\n".format(score))
 ```
 
-Note: The "autosave" feature is due to some a very big performance problem I will explain later.
+Note: The "autosave" feature is for a very big performance problem I will explain later.
 
 The next step was creating a function to "evolve" the random data slightly. This ended up being just a basic random function, adding or subtracting a little bit from each value on the genetic_data array.
 
