@@ -1,5 +1,5 @@
 category: binary exploitation
 =============================
 
-- [cake](binary/cake/README.md)
+- [cake](cake/README.md)
 

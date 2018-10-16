@@ -1,5 +1,5 @@
 category: general skills
 ========================
 
-- [Dog or Frog](general/Dog\ or\ Frog/README.md)
+- [Dog or Frog](Dog\ or\ Frog/README.md)
 
