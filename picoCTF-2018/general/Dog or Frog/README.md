@@ -17,9 +17,6 @@ Before beginning a full on genetic algorithm, I decided to just make sure I coul
 
 
 ```python
-# This code is disgusting. I know. I don't do python and I was too lazy to look it up at the time. 
-# I'm sorry to whoever reads this.
-
 genetic_params = np.array([1, 1])
 genetic_data = np.zeros(IMAGE_DIMS)
 
@@ -106,7 +103,8 @@ Note: The "autosave" feature is due to some a very big performance problem I wil
 
 The next step was creating a function to "evolve" the random data slightly. This ended up being just a basic random function, adding or subtracting a little bit from each value on the genetic_data array.
 
-		# Evolve Alg    
+```python
+            # Evolve Alg
             index = 0
             for line in genetic_data:
                 jndex = 0
@@ -114,8 +112,9 @@ The next step was creating a function to "evolve" the random data slightly. This
                     change = (random.random()-0.5)*randomness_data
                     genetic_data[index][jndex] = genetic_data[index][jndex] + change
                     
-                    jndex = jndex + 1
-                index = index + 1
+                    jndex += 1
+                index += 1
+```
 
 This was now a working (barely) basic guess and check algorithm. However it had a really big problem. After leaving the program running for a few minutes, I noticed a very significant slow down. Checking my system resources with htop showed me that my python program had exceeded 20% of my 16GB of RAM and it seemed to not show any sign of slowing. I didn't know that I could have a memory leak in a language with garbage collection.
 ## The Worst Way to Solve a Memory Leak
