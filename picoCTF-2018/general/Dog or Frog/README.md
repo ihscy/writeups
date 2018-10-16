@@ -8,37 +8,35 @@ I suspect I addressed this problem from a very much unintended angle. Because ou
 Mainly for the sake of fun and learning than solving the problem, I decided to write a sort of genetic algorithm to attempt to generate the required adversarial perturbation for the problem.
 
 ## First Steps
-For any approach really to work, I was going to have to download the model and set it up to run on my computer. The algorithm needs exact feedback on the "froginess" of its output and the online model won't provide that unless the 'tree_frog' confidence is in the top 5 predictions (also I don't want to automate POST requests in python). I downloaded the source and began tinkering. After installing all the requirements using pip I began to look at the solution_template.py provided in the static directory. Unfortunately it didn't contain any code to actually run the model, so I looked at some of the code used for the server. I found the necessary methods and shamelessly copy-pasted them into the solution template. After a little tinkering I got the script to output the exact 'tree_frog' confidence of the model.
+For any approach really to work, I was going to have to download the model and set it up to run on my computer. The algorithm needs exact feedback on the "froginess" of its output and 
+the online model won't provide that unless the 'tree_frog' confidence is in the top 5 predictions (also I didn't want to automate POST requests in python). I downloaded the source and 
+began tinkering. After installing all the requirements using pip I began to look at the solution_template.py provided in the static directory. Unfortunately it didn't contain any code to actually run the model, so I looked at some of the code used for the server. I found the necessary methods and shamelessly copy-pasted them into the solution template. After a little tinkering I got the script to output the exact 'tree_frog' confidence of the model.
 
 ## The Evolution of Laziness
 Before beginning a full on genetic algorithm, I decided to just make sure I could write a script to add some random noise to the dog photo and check the frog similarity and P-Hash value. 
 
 
-
+```python
     # This code is disgusting. I know. I don't do python and I was too lazy to look it up at the time. 
     # I'm sorry to whoever reads this.
-
-    genetic_params = np.array([1,1]) 
+    
+    genetic_params = np.array([1, 1])
     genetic_data = np.zeros(IMAGE_DIMS)
-
-	def genetic_func(j, k, v):
-	    return v + genetic_data[j][k]
-	    
+    
+    def genetic_func(j, k, v):
+        return v + genetic_data[j][k]
+    
     def create_img(...):
-	    ...
-	    ...
-	    i=0
-	    j=0
-	    k=0
-	    for line in test:
-	        j = 0
-	        for line2 in line:
-	            k = 0
-	            for pixel in line2:
-	                newImg[i][j][k] = (genetic_func(j,k,pixel[0]), genetic_func(j,k,pixel[1]), genetic_func(j,k,pixel[2]))
-	                k = k + 1
-	            j = j + 1
-	        i = i + 1
+        ...
+        ...
+        i = 0
+        j = 0
+        k = 0
+        for i, line in enumerate(test):
+            for j, line2 in enumerate(line):
+                for k, pixel in enumerate(line2):
+                    newImg[i][j][k] = (genetic_func(j, k, pixel[0]), genetic_func(j, k, pixel[1]), genetic_func(j, k, pixel[2]))
+```
 
 This worked surprisingly well, so I decided to just use it as the basic image generation code.
 Out of pure laziness, I decided that instead of writing a full on genetic algorithm, I would first try just writing a sort of "guess and check" script. This was a lot easier than implementing a genetic algorithm, and as I was running the model on my CPU and not GPU, not much slower.
