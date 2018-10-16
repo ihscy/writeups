@@ -1,2 +1,5 @@
-(placeholder README)
-====================
+category: binary exploitation
+=============================
+
+- [cake](binary/cake/README.md)
+

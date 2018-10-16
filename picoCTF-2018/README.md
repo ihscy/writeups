@@ -26,7 +26,15 @@ Team members:
 
 ### Write-ups
 
-TODO
+- [binary](binary/README.md)
+  - [cake](binary/cake/README.md)
+- [cryptography](cryptography/README.md)
+  - [James Brahm Returns](cryptography/James\ Brahm\ Returns/README.md)
+- [general](general/README.md)
+  - [Dog or Frog](general/Dog\ or\ Frog/README.md)
+- [reversing](reversing/README.md)
+  - [be-quick-or-be-dead-3](reversing/be-quick-or-be-dead-3/README.md)
+  - [circuit123](reversing/circuit123/README.md)
 
 -------------------------------------------------------------------------------
 
