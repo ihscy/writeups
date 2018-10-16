@@ -17,50 +17,54 @@ Before beginning a full on genetic algorithm, I decided to just make sure I coul
 
 
 ```python
-    # This code is disgusting. I know. I don't do python and I was too lazy to look it up at the time. 
-    # I'm sorry to whoever reads this.
-    
-    genetic_params = np.array([1, 1])
-    genetic_data = np.zeros(IMAGE_DIMS)
-    
-    def genetic_func(j, k, v):
-        return v + genetic_data[j][k]
-    
-    def create_img(...):
-        ...
-        ...
-        i = 0
-        j = 0
-        k = 0
-        for i, line in enumerate(test):
-            for j, line2 in enumerate(line):
-                for k, pixel in enumerate(line2):
-                    newImg[i][j][k] = (genetic_func(j, k, pixel[0]), genetic_func(j, k, pixel[1]), genetic_func(j, k, pixel[2]))
+# This code is disgusting. I know. I don't do python and I was too lazy to look it up at the time. 
+# I'm sorry to whoever reads this.
+
+genetic_params = np.array([1, 1])
+genetic_data = np.zeros(IMAGE_DIMS)
+
+def genetic_func(j, k, v):
+    return v + genetic_data[j][k]
+
+def create_img(...):
+    ...
+    ...
+    for i, line in enumerate(test):
+        for j, line2 in enumerate(line):
+            for k, pixel in enumerate(line2):
+                newImg[i][j][k] = (genetic_func(j, k, pixel[0]), genetic_func(j, k, pixel[1]), genetic_func(j, k, pixel[2]))
 ```
 
 This worked surprisingly well, so I decided to just use it as the basic image generation code.
 Out of pure laziness, I decided that instead of writing a full on genetic algorithm, I would first try just writing a sort of "guess and check" script. This was a lot easier than implementing a genetic algorithm, and as I was running the model on my CPU and not GPU, not much slower.
 
-    genetic_last_score = -999999999
-	number_of_failed_generations = 0
-	automated_save_ctr = 0
+```python
+genetic_last_score = -999999999
+number_of_failed_generations = 0
+automated_save_ctr = 0
 
-	randomness_data = 0.01
+randomness_data = 0.01
 
-	if __name__ == "__main__":
-
-	import_model()
+if __name__ == "__main__":
+    
+    import_model()
     
     frog_dist = 9999999
-    top_preds = np.array([0,0])
-
-    while frog_dist > 2 or genetic_last_score < 80:
-        frog_img = create_img("./autosave{}.png".format(str(automated_save_ctr)), "./trixi_frog.png", "./model.h5", TREE_FROG_STR, TREE_FROG_IDX)
-        frog_mat = prepare_image(frog_img)
+    top_preds = np.array([0, 0])
     
+    while frog_dist > 2 or genetic_last_score < 80:
+        frog_img = create_img(
+            "./autosave{}.png".format(automated_save_ctr),
+            "./trixi_frog.png",
+            "./model.h5",
+            TREE_FROG_STR,
+            TREE_FROG_IDX
+        )
+        frog_mat = prepare_image(frog_img)
+        
         # read the image in PIL format
         frog_label, frog_conf, top_preds = get_predictions(frog_mat)
-
+        
         frog_dist = hash_hamming_distance(phash(frog_img), phash(base_img))
         frog_chance = find_frog(top_preds)
         
@@ -71,12 +75,12 @@ Out of pure laziness, I decided that instead of writing a full on genetic algori
         
         if score >= 95:
             print("noice")
-            sys.exit(0)
+            sys.exit()
         
         
         if genetic_last_score > score:
             # If no improvement then rollback
-            print("No Improvement...{}".format(str(score)))
+            print("No Improvement...{}".format(score))
             #print("phash...{}".format(str(frog_dist)))
             genetic_data = np.copy(old_data)
             #print("Rolled Back, Bad Generation!\n")
@@ -93,10 +97,10 @@ Out of pure laziness, I decided that instead of writing a full on genetic algori
             number_of_failed_generations = 0
             print("isFrog = {}".format(TREE_FROG_STR in frog_label))
             print("pHash = {}".format(frog_dist))
-        
+            
             print("frog_confidence = {}".format(frog_chance))
             print("score = {}\n".format(score))
-        
+```
 
 Note: The "autosave" feature is due to some a very big performance problem I will explain later.
 
