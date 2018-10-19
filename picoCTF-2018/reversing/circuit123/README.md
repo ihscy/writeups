@@ -5,10 +5,10 @@ circuit123
 Problem
 -------
 
-**Category:** Reversing
+**Category:** Reversing  
 **Description:** “Can you crack the key to decrypt map2 for us? The key to map1
-is 11443513758266689915.”
-**Hint:** “Have you heard of z3?”
+is 11443513758266689915.”  
+**Hint:** “Have you heard of z3?”  
 
 
 Investigation
