@@ -1,7 +1,7 @@
 Note: if you're viewing this on the GitHub mirror, the markdown will be broken,
 since we're writing this in GitLab-flavored markdown.
 
-picoCTF: 2019-06-03 to 2019-06-07
+HSCTF: 2019-06-03 to 2019-06-07
 ---------------------------------
 
 Team members:
