@@ -24,7 +24,6 @@ There happens to be a global array `curr`, with
 As with Aria Writer v1, the tcache double free vulnerability can be exploited to write into an arbitrary location. To reduce redundancy, I implemented this under a function called `tcache_write`.
 
 ```python
-
 def tcache_write(block_size, target, new_value):
     '''
     Exploits tcache double free to write into arbitary location
@@ -54,14 +53,12 @@ Since Aria Writer v3 does not limit the number of times option 2 is chosen, leak
 
 For a chunk to be placed in the unsorted bin, it must
 
-* not be on the top of the heap, or else it will be merged with the top chunk rather than stored in a bin. Thus, we will forge two small chunks after it. I am not sure why it is two and not one, but the program crashes with only one. When I have time, I will figure it out later.
-	
+* not be on the top of the heap, or else it will be merged with the top chunk rather than stored in a bin. The heap manager will check whether the next chunk is in use to decide whether to merge the large chunk with the next chunk, and each chunk stores information on whether the previous chunk is free in the P flag. Thus, we will forge two small chunks after it.
 * not fit into any tcache bins. There are 40 tcache bins, starting with 0x10 and incrementing by 0x10. Thus, the forged chunk should have a size greater than 0x410. I went with 0x420.
 
 There is ample space in the data segment to hold the forged chunk. The forged chunk is in the location of `name` because `name` is printed at every turn, giving us a means of viewing the leak.
 
 ```python
-
 # 1. prepare the chunk header for the forged chunk with size of 0x420
 #    0x421 will be read into address 0x602048 (name)
 conn.send(p64(0x421) + '\n')
@@ -78,7 +75,6 @@ tcache_write(0x70, name + 0x10, '')
 With these conditions met, we free, consequently placing the forged chunk into the unsorted bin.
 
 ```python
-
 free()
 
 ```
@@ -91,9 +87,7 @@ In Aria Writer v1, there was a secret option 3 that printed 200 characters of `n
 I made a request for an arbitrary amount of memory. Size does not matter as long as it fits in a tcache bin. Its contents must not exceed 7 bytes, as explained later.
 
 ```python
-
 malloc(0x10, '')
-
 ```
 
 After the allocation, the memory layout will be:
@@ -102,7 +96,7 @@ After the allocation, the memory layout will be:
 	
 	0x602050 -> xxxxxxxx        main_arena+0x50     [fd and bk (unlinked from main_arena)]
 	
-	0x602060 -> 0x602040        0x0401				[chunk_header for the remainder]
+	0x602060 -> 0x602040        0x0401		[chunk_header for the remainder]
 	
 	0x602070 -> main_arena+0x60 main_arena+0x60     [fd and bk (linked into main_arena)]
 	
@@ -112,14 +106,12 @@ Note that ```fd``` is corrupted by the '\n'. Thus, the string we pass in must no
 From here, I overwrote everything leading up to the second pointer with filler.
 
 ```python
-
 tcache_write(0x30, name, 'a' * 0x17)
-
 ```
 
 As the null terminator is now gone, `main_arena` should be printed properly on the next turn.
 
-We calculate the address of libc from offsets found under the debugger and overwrite `__free_hook` with our one gadget. Again, we use `tcache_write`.
+We calculate the address of libc from offsets found under the debugger and overwrite `__free_hook` with our one gadget.
 
 ```python
 tcache_write(0x90, free_hook, p64(libc_address + one_gadget))
