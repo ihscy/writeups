@@ -81,9 +81,95 @@ for i in range(63):
 print(str(output)[1:-1])
 ```
 
-Now what this program is essentially doing is taking a 7-byte key `n`, and using it to create a 63-byte key `keybytes`. Then, it XORs that key with the 63-byte flag, and prints the output as a list of decimal character codes.
+Now what this program is essentially doing is taking a 7-byte key `n`, and using it to create a 63-byte key `keybytes` by XORing together bytes of `n` in a particular order. Then, it XORs `keybytes` with the 63-byte flag, and prints the output as a list of decimal character codes.
 
 Solution
 --------
+
+The way `keybytes` is created from `n` is constant. Each byte of `keybytes` is three bytes of `n` XORed together, given by the indices `i`, `j`, and `k`. If two of those indices are the same, we can simplify the expression for that byte of `keybytes`. We can modify the deobfuscated script to print the expression for each byte of `keybytes` in terms of n:
+
+```python
+keyidxs = []
+for k in range(3):
+    for j in range(7):
+        for i in range(3):
+            idxs = sorted((k, j, i))
+            for idx in set(idxs):
+                if idxs.count(idx) >= 2:
+                    idxs.remove(idx)
+                    idxs.remove(idx)
+            print(' ^ '.join('n[{}]'.format(idx) for idx in idxs))
+            keyidxs.append(tuple(idxs))
+print(keyidxs)
+```
+
+That outputs this:
+
+```
+n[0]
+n[1]
+n[2]
+n[1]
+n[0]
+n[0] ^ n[1] ^ n[2]
+n[2]
+n[0] ^ n[1] ^ n[2]
+n[0]
+n[3]
+n[0] ^ n[1] ^ n[3]
+n[0] ^ n[2] ^ n[3]
+n[4]
+n[0] ^ n[1] ^ n[4]
+n[0] ^ n[2] ^ n[4]
+n[5]
+n[0] ^ n[1] ^ n[5]
+n[0] ^ n[2] ^ n[5]
+n[6]
+n[0] ^ n[1] ^ n[6]
+n[0] ^ n[2] ^ n[6]
+n[1]
+n[0]
+n[0] ^ n[1] ^ n[2]
+n[0]
+n[1]
+n[2]
+n[0] ^ n[1] ^ n[2]
+n[2]
+n[1]
+n[0] ^ n[1] ^ n[3]
+n[3]
+n[1] ^ n[2] ^ n[3]
+n[0] ^ n[1] ^ n[4]
+n[4]
+n[1] ^ n[2] ^ n[4]
+n[0] ^ n[1] ^ n[5]
+n[5]
+n[1] ^ n[2] ^ n[5]
+n[0] ^ n[1] ^ n[6]
+n[6]
+n[1] ^ n[2] ^ n[6]
+n[2]
+n[0] ^ n[1] ^ n[2]
+n[0]
+n[0] ^ n[1] ^ n[2]
+n[2]
+n[1]
+n[0]
+n[1]
+n[2]
+n[0] ^ n[2] ^ n[3]
+n[1] ^ n[2] ^ n[3]
+n[3]
+n[0] ^ n[2] ^ n[4]
+n[1] ^ n[2] ^ n[4]
+n[4]
+n[0] ^ n[2] ^ n[5]
+n[1] ^ n[2] ^ n[5]
+n[5]
+n[0] ^ n[2] ^ n[6]
+n[1] ^ n[2] ^ n[6]
+n[6]
+[(0,), (1,), (2,), (1,), (0,), (0, 1, 2), (2,), (0, 1, 2), (0,), (3,), (0, 1, 3), (0, 2, 3), (4,), (0, 1, 4), (0, 2, 4), (5,), (0, 1, 5), (0, 2, 5), (6,), (0, 1, 6), (0, 2, 6), (1,), (0,), (0, 1, 2), (0,), (1,), (2,), (0, 1, 2), (2,), (1,), (0, 1, 3), (3,), (1, 2, 3), (0, 1, 4), (4,), (1, 2, 4), (0, 1, 5), (5,), (1, 2, 5), (0, 1, 6), (6,), (1, 2, 6), (2,), (0, 1, 2), (0,), (0, 1, 2), (2,), (1,), (0,), (1,), (2,), (0, 2, 3), (1, 2, 3), (3,), (0, 2, 4), (1, 2, 4), (4,), (0, 2, 5), (1, 2, 5), (5,), (0, 2, 6), (1, 2, 6), (6,)]
+```
 
 Bruh.
