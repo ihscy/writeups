@@ -5,10 +5,10 @@ HSCTF: 2019-06-03 to 2019-06-07
 ---------------------------------
 
 Team members:
-  - Ian Huang as imyxh,
-  - Jessica Ruan as jespiron,
-  - Neil Gupta as nog642,
-  - Robert Stevens as Torb1Trick.
+  - Ian Huang as imyxh
+  - Jessica Ruan as jespiron
+  - Neil Gupta as nog642
+  - Robert Stevens as Torb1Trick
   - Timothy Zhou as stackdynamic
 
 |                         |                                              |
@@ -22,9 +22,9 @@ Team members:
 
 ### Write-ups
 
-- [binary](binary/README.md)
+- **Binary**
   - [Aria Writer v3](binary/aria-writer-v3/README.md)
-- [web](reversing/README.md)
+- **Web**
   - [Networked Password](web/networked-password/README.md)
 
 -------------------------------------------------------------------------------
