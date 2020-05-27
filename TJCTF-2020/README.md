@@ -22,12 +22,8 @@ Team members:
 
 ### Write-ups
 
-- **Binary**
-  - [Something something](binary/aria-writer-v3/README.md)
 - **Cryptography**
   - [Tap Dancing](cryptography/tap-dancing/README.md)
-- **Web**
-  - [Something else](web/networked-password/README.md)
 
 -------------------------------------------------------------------------------
 
