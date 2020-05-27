@@ -5,7 +5,7 @@ HSCTF: 2020-05-22 to 2020-05-26
 ---------------------------------
 
 Team members:
-  - Jim as jimmyl02
+  - Jimmy Li as jimmyl02
   - Ian Huang as imyxh
   - Neil Gupta as nog642
   - Timothy Zhou as stackdynamic
