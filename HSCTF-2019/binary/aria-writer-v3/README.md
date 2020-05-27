@@ -1,15 +1,15 @@
-HSCTF 2019
-
 Aria Writer v3
+==============
+**Category:** Binary Exploitation
+
+**Points:** 468 (dynamic)
+
+**Description:**
 
 After all that writing, Rob's gone blind. He still needs to finish this song though :(
 
-Binary Exploitation
-
-468 points
-
-
-# Summary
+Summary
+-------
 
 Rob can write and discard drafts, thus allowing for the allocation of chunks smaller than 420 bytes with values of our choosing, as well as the freeing of the current chunk. Unlike Aria Writer v1, there is no longer a limitation on the number of times we discard our letter; however, there is a limitation on the number of letters we can write.
 
@@ -19,7 +19,8 @@ There happens to be a global array `curr`, with
 	
 * `curr[1]` and beyond being the name. For convenience, I will refer to this as `name` (0x602048).
 
-# Vulnerability
+Vulnerability
+-------------
 
 As with Aria Writer v1, the tcache double free vulnerability can be exploited to write into an arbitrary location. To reduce redundancy, I implemented this under a function called `tcache_write`.
 
@@ -45,7 +46,8 @@ def tcache_write(block_size, target, new_value):
 
 `block_size` does not matter as long as it uses a different tcache bin for every call. Using different bins may not be neccessary, but it is a good safety measure, since the target location might have some random value that will be copied into the tcache bin.
 
-# Exploit
+Exploit
+-------
 
 The idea is to overwrite `__free_hook` with one gadget, which requires leaking the location of libc.
 
