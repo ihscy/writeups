@@ -86,7 +86,7 @@ Now what this program is essentially doing is taking a 7-byte key `n`, and using
 Solution
 --------
 
-My first thought was just to brute force the 7-byte key. We know `n` consists of only characters from `a`, meaning lowercase letters. That's 26 possibilities, meaning a search space of 26^7 or around 8 billion. That's... doable. It's a good back-up, but we can do better.
+My first thought was just to brute force the 7-byte key. We know `n` consists of only characters from `a`, meaning lowercase letters. That's 26 possibilities, meaning a search space of $`26^7`$ or around 8 billion. That's... doable. It's a good back-up, but we can do better.
 
 The way `keybytes` is created from `n` is constant. Each byte of `keybytes` is three bytes of `n` XORed together, given by the indices `i`, `j`, and `k`. If two of those indices are the same, we can simplify the expression for that byte of `keybytes`. We can modify the deobfuscated script to print the expression for each byte of `keybytes` in terms of `n`:
 
