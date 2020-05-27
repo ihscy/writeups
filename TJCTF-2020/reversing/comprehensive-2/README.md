@@ -86,7 +86,7 @@ Now what this program is essentially doing is taking a 7-byte key `n`, and using
 Solution
 --------
 
-My first thought was just to brute force the 7-byte key. We know `n` consists of only characters from `a`, meaning lowercase letters. That's 26 possibilities, meaning a search space of 26^7 or around 8 billion. That's... doable. It's a good backup, but we can do better.
+My first thought was just to brute force the 7-byte key. We know `n` consists of only characters from `a`, meaning lowercase letters. That's 26 possibilities, meaning a search space of 26^7 or around 8 billion. That's... doable. It's a good back-up, but we can do better.
 
 The way `keybytes` is created from `n` is constant. Each byte of `keybytes` is three bytes of `n` XORed together, given by the indices `i`, `j`, and `k`. If two of those indices are the same, we can simplify the expression for that byte of `keybytes`. We can modify the deobfuscated script to print the expression for each byte of `keybytes` in terms of `n`:
 
@@ -174,4 +174,64 @@ n[6]
 [(0,), (1,), (2,), (1,), (0,), (0, 1, 2), (2,), (0, 1, 2), (0,), (3,), (0, 1, 3), (0, 2, 3), (4,), (0, 1, 4), (0, 2, 4), (5,), (0, 1, 5), (0, 2, 5), (6,), (0, 1, 6), (0, 2, 6), (1,), (0,), (0, 1, 2), (0,), (1,), (2,), (0, 1, 2), (2,), (1,), (0, 1, 3), (3,), (1, 2, 3), (0, 1, 4), (4,), (1, 2, 4), (0, 1, 5), (5,), (1, 2, 5), (0, 1, 6), (6,), (1, 2, 6), (2,), (0, 1, 2), (0,), (0, 1, 2), (2,), (1,), (0,), (1,), (2,), (0, 2, 3), (1, 2, 3), (3,), (0, 2, 4), (1, 2, 4), (4,), (0, 2, 5), (1, 2, 5), (5,), (0, 2, 6), (1, 2, 6), (6,)]
 ```
 
-Each of the seven bytes in `n` have at least one byte in `keybytes` that is equal to it.
+Each of the seven bytes in `n` have at least one byte in `keybytes` that is equal to it. We know that the *real* output XORed with the *real* 63-byte key gives us the flag. We also know the set of valid characters that can be in the flag. So we can use all the bytes in hte 63-byte key that are equal to a byte in the 7-byte key to narrow down, byte-by-byte, which are possible bytes for the 7-byte key.
+
+After we've narrowed down the search space that way, we then have to iterate over the remaning possible 7-byte keys, and try them each. We can check if the flag is valid with the same checks that are at the top of the original script as `assert` statements.
+
+Here is the solve script:
+
+```python
+#!/usr/bin/env python3
+from functools import reduce
+import itertools
+from operator import itemgetter, xor
+
+KEY_IDXS = ((0,), (1,), (2,), (1,), (0,), (0, 1, 2), (2,), (0, 1, 2), (0,), (3,), (0, 1, 3), (0, 2, 3), (4,), (0, 1, 4), (0, 2, 4), (5,), (0, 1, 5), (0, 2, 5), (6,), (0, 1, 6), (0, 2, 6), (1,), (0,), (0, 1, 2), (0,), (1,), (2,), (0, 1, 2), (2,), (1,), (0, 1, 3), (3,), (1, 2, 3), (0, 1, 4), (4,), (1, 2, 4), (0, 1, 5), (5,), (1, 2, 5), (0, 1, 6), (6,), (1, 2, 6), (2,), (0, 1, 2), (0,), (0, 1, 2), (2,), (1,), (0,), (1,), (2,), (0, 2, 3), (1, 2, 3), (3,), (0, 2, 4), (1, 2, 4), (4,), (0, 2, 5), (1, 2, 5), (5,), (0, 2, 6), (1, 2, 6), (6,))
+ALPHA = list(map(ord, 'abcdefghijklmnopqrstuvwxyz'))
+OUTPUT = [1, 18, 21, 18, 73, 20, 65, 8, 8, 4, 24, 24, 9, 18, 29, 21, 3, 21, 14, 6, 18, 83, 2, 26, 86, 83, 5, 20, 27, 28, 85, 67, 5, 17, 2, 7, 12, 11, 17, 0, 2, 20, 12, 26, 26, 30, 15, 44, 15, 31, 0, 12, 46, 8, 28, 23, 0, 11, 3, 25, 14, 0, 65]
+FLAG_VALID = set(list(map(ord, ' !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')) + ALPHA)
+
+
+def main():
+
+    possibilities = []
+    for i in range(7):
+        possible = set(ALPHA)
+        for b in ALPHA:
+            for output_byte, key_idxs in zip(OUTPUT, KEY_IDXS):
+                if len(key_idxs) != 1:
+                    continue
+                if key_idxs[0] != i:
+                    continue
+                if output_byte ^ b not in FLAG_VALID:
+                    possible.remove(b)
+                    break
+        possibilities.append(tuple(possible))
+
+    print(tuple(map(len, possibilities)))
+
+    for i, possible_n in enumerate(itertools.product(*possibilities)):
+
+        if i % 1000000 == 0:
+            print('tried {} keys so far'.format(i))
+
+        keybytes = tuple(reduce(xor, (possible_n[key_idx] for key_idx in key_idxs)) for output_byte, key_idxs in zip(OUTPUT, KEY_IDXS))
+
+        flag = tuple(itertools.starmap(xor, zip(keybytes, OUTPUT)))
+        if any(c not in FLAG_VALID for c in flag):
+            continue
+
+        flagstr = ''.join(map(chr, flag))
+        if flagstr.count('tjctf{') != 1:
+            continue
+        if flagstr.count('}') != 1:
+            continue
+        if flagstr.count(' ') != 5:
+            continue
+
+        keystr = ''.join(map(chr, possible_n))
+        print('key {}: {}'.format(keystr, flagstr))
+
+
+main()
+```
