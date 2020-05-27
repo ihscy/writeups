@@ -238,4 +238,31 @@ main()
 
 This outputs the number of possibilities for each byte in `n`: `(11, 6, 13, 17, 25, 23, 16)`. This means our search space has been narrowed to 11*6*13*17*25*23*16, or around 134 million. That's quite a bit better (a 60x decrease), and brought the runtime down from probably over a day to a couple hours (although I didn't have to check all 134 million before I found the solution, so it actually only took around 20 minutes).
 
-Bruh.
+Eventually, this got the key (and the flag):
+
+```
+(11, 6, 13, 17, 25, 23, 16)
+tried 0 keys so far
+tried 1000000 keys so far
+tried 2000000 keys so far
+tried 3000000 keys so far
+tried 4000000 keys so far
+tried 5000000 keys so far
+tried 6000000 keys so far
+tried 7000000 keys so far
+tried 8000000 keys so far
+tried 9000000 keys so far
+tried 10000000 keys so far
+tried 11000000 keys so far
+tried 12000000 keys so far
+tried 13000000 keys so far
+tried 14000000 keys so far
+tried 15000000 keys so far
+tried 16000000 keys so far
+tried 17000000 keys so far
+tried 18000000 keys so far
+tried 19000000 keys so far
+tried 20000000 keys so far
+key isacapo: hata o sagashiteimasu ka? dozo, tjctf{sumimasen_flag_kudasaii}.
+tried 21000000 keys so far
+```
