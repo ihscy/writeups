@@ -236,7 +236,7 @@ def main():
 main()
 ```
 
-This outputs the number of possibilities for each byte in `n`: `(11, 6, 13, 17, 25, 23, 16)`. This means our search space has been narrowed to 11*6*13*17*25*23*16, or around 134 million. That's quite a bit better (a 60x decrease), and brought the runtime down from probably over a day to a couple hours (although I didn't have to check all 134 million before I found the solution, so it actually only took around 20 minutes).
+This outputs the number of possibilities for each byte in `n`: `(11, 6, 13, 17, 25, 23, 16)`. This means our search space has been narrowed to $11*6*13*17*25*23*16$, or around 134 million. That's quite a bit better (a 60x decrease), and brought the runtime down from probably over a day to a couple hours (although I didn't have to check all 134 million before I found the solution, so it actually only took around 20 minutes).
 
 Eventually, this got the key (and the flag):
 
