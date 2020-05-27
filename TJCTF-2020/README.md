@@ -16,7 +16,7 @@ Team members:
 | **Team name:**          | ihscy                                        |
 | **Final score:**        | 2600                                         |
 | **Final rank:**         | 8th globally, ??? across US high schools     |
-| **Unsolved problems:**  | 3 total                                      |
+| **Unsolved problems:**  | Truly Terrible Why, Circus, Cookie Monster   |
 
 ![score progression][progression]
 
