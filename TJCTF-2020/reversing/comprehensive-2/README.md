@@ -265,4 +265,5 @@ tried 19000000 keys so far
 tried 20000000 keys so far
 key isacapo: hata o sagashiteimasu ka? dozo, tjctf{sumimasen_flag_kudasaii}.
 tried 21000000 keys so far
+^C
 ```
