@@ -24,6 +24,8 @@ Team members:
 
 - **Cryptography**
   - [Tap Dancing](cryptography/tap-dancing/README.md)
+- **Reversing**
+  - [Comprehensive 2](reversing/comprehensive-2/README.md)
 
 -------------------------------------------------------------------------------
 

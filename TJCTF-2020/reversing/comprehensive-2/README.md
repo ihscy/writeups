@@ -174,11 +174,11 @@ n[6]
 [(0,), (1,), (2,), (1,), (0,), (0, 1, 2), (2,), (0, 1, 2), (0,), (3,), (0, 1, 3), (0, 2, 3), (4,), (0, 1, 4), (0, 2, 4), (5,), (0, 1, 5), (0, 2, 5), (6,), (0, 1, 6), (0, 2, 6), (1,), (0,), (0, 1, 2), (0,), (1,), (2,), (0, 1, 2), (2,), (1,), (0, 1, 3), (3,), (1, 2, 3), (0, 1, 4), (4,), (1, 2, 4), (0, 1, 5), (5,), (1, 2, 5), (0, 1, 6), (6,), (1, 2, 6), (2,), (0, 1, 2), (0,), (0, 1, 2), (2,), (1,), (0,), (1,), (2,), (0, 2, 3), (1, 2, 3), (3,), (0, 2, 4), (1, 2, 4), (4,), (0, 2, 5), (1, 2, 5), (5,), (0, 2, 6), (1, 2, 6), (6,)]
 ```
 
-Each of the seven bytes in `n` have at least one byte in `keybytes` that is equal to it. We know that the *real* output XORed with the *real* 63-byte key gives us the flag. We also know the set of valid characters that can be in the flag. So we can use all the bytes in hte 63-byte key that are equal to a byte in the 7-byte key to narrow down, byte-by-byte, which are possible bytes for the 7-byte key.
+Each of the seven bytes in `n` have at least one byte in `keybytes` that is equal to it. We know that the *real* output XORed with the *real* 63-byte key gives us the flag. We also know the set of valid characters that can be in the flag. So we can use all the bytes in the 63-byte key that are equal to a byte in the 7-byte key to narrow down, byte-by-byte, which are possible bytes for the 7-byte key.
 
 After we've narrowed down the search space that way, we then have to iterate over the remaning possible 7-byte keys, and try them each. We can check if the flag is valid with the same checks that are at the top of the original script as `assert` statements.
 
-Here is the solve script:
+Here is a solve script that does just that:
 
 ```python
 #!/usr/bin/env python3
