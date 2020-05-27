@@ -1,7 +1,7 @@
 Note: if you're viewing this on the GitHub mirror, the markdown will be broken,
 since we're writing this in GitLab-flavored markdown.
 
-HSCTF: 2020-05-22 to 2020-05-26
+TJCTF: 2020-05-22 to 2020-05-26
 ---------------------------------
 
 Team members:
