@@ -187,9 +187,9 @@ import itertools
 from operator import itemgetter, xor
 
 KEY_IDXS = ((0,), (1,), (2,), (1,), (0,), (0, 1, 2), (2,), (0, 1, 2), (0,), (3,), (0, 1, 3), (0, 2, 3), (4,), (0, 1, 4), (0, 2, 4), (5,), (0, 1, 5), (0, 2, 5), (6,), (0, 1, 6), (0, 2, 6), (1,), (0,), (0, 1, 2), (0,), (1,), (2,), (0, 1, 2), (2,), (1,), (0, 1, 3), (3,), (1, 2, 3), (0, 1, 4), (4,), (1, 2, 4), (0, 1, 5), (5,), (1, 2, 5), (0, 1, 6), (6,), (1, 2, 6), (2,), (0, 1, 2), (0,), (0, 1, 2), (2,), (1,), (0,), (1,), (2,), (0, 2, 3), (1, 2, 3), (3,), (0, 2, 4), (1, 2, 4), (4,), (0, 2, 5), (1, 2, 5), (5,), (0, 2, 6), (1, 2, 6), (6,))
-ALPHA = list(map(ord, 'abcdefghijklmnopqrstuvwxyz'))
+ALPHA = tuple(map(ord, 'abcdefghijklmnopqrstuvwxyz'))
 OUTPUT = [1, 18, 21, 18, 73, 20, 65, 8, 8, 4, 24, 24, 9, 18, 29, 21, 3, 21, 14, 6, 18, 83, 2, 26, 86, 83, 5, 20, 27, 28, 85, 67, 5, 17, 2, 7, 12, 11, 17, 0, 2, 20, 12, 26, 26, 30, 15, 44, 15, 31, 0, 12, 46, 8, 28, 23, 0, 11, 3, 25, 14, 0, 65]
-FLAG_VALID = set(list(map(ord, ' !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')) + ALPHA)
+FLAG_VALID = set(tuple(map(ord, ' !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')) + ALPHA)
 
 
 def main():
@@ -235,3 +235,7 @@ def main():
 
 main()
 ```
+
+This outputs the number of possibilities for each byte in `n`: `(11, 6, 13, 17, 25, 23, 16)`. This means our search space has been narrowed to 11*6*13*17*25*23*16, or around 134 million. That's quite a bit better (a 60x decrease), and brought the runtime down from probably over a day to a couple hours (although I didn't have to check all 134 million before I found the solution, so it actually only took around 20 minutes).
+
+Bruh.
