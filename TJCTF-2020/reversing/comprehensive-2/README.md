@@ -52,7 +52,7 @@ Now this returns an output: `7, 28, 0, 2, 21, 29, 6, 12, 28, 1, 77, 29, 11, 19, 
 
 After some deobfuscation, we can find that the program is equivalent to this:
 
-``python
+```python
 FLAG = 'tjctf{ejoi ejwe?wpio jgwgjj oj)(u) jwje?? eigh_ahoijwwijfwe_wi}'
 n = 'svchars'
 
