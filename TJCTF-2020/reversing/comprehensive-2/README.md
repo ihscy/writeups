@@ -86,7 +86,9 @@ Now what this program is essentially doing is taking a 7-byte key `n`, and using
 Solution
 --------
 
-The way `keybytes` is created from `n` is constant. Each byte of `keybytes` is three bytes of `n` XORed together, given by the indices `i`, `j`, and `k`. If two of those indices are the same, we can simplify the expression for that byte of `keybytes`. We can modify the deobfuscated script to print the expression for each byte of `keybytes` in terms of n:
+My first thought was just to brute force the 7-byte key. We know `n` consists of only characters from `a`, meaning lowercase letters. That's 26 possibilities, meaning a search space of 26^7 or around 8 billion. That's... doable. It's a good backup, but we can do better.
+
+The way `keybytes` is created from `n` is constant. Each byte of `keybytes` is three bytes of `n` XORed together, given by the indices `i`, `j`, and `k`. If two of those indices are the same, we can simplify the expression for that byte of `keybytes`. We can modify the deobfuscated script to print the expression for each byte of `keybytes` in terms of `n`:
 
 ```python
 keyidxs = []
@@ -172,4 +174,4 @@ n[6]
 [(0,), (1,), (2,), (1,), (0,), (0, 1, 2), (2,), (0, 1, 2), (0,), (3,), (0, 1, 3), (0, 2, 3), (4,), (0, 1, 4), (0, 2, 4), (5,), (0, 1, 5), (0, 2, 5), (6,), (0, 1, 6), (0, 2, 6), (1,), (0,), (0, 1, 2), (0,), (1,), (2,), (0, 1, 2), (2,), (1,), (0, 1, 3), (3,), (1, 2, 3), (0, 1, 4), (4,), (1, 2, 4), (0, 1, 5), (5,), (1, 2, 5), (0, 1, 6), (6,), (1, 2, 6), (2,), (0, 1, 2), (0,), (0, 1, 2), (2,), (1,), (0,), (1,), (2,), (0, 2, 3), (1, 2, 3), (3,), (0, 2, 4), (1, 2, 4), (4,), (0, 2, 5), (1, 2, 5), (5,), (0, 2, 6), (1, 2, 6), (6,)]
 ```
 
-Bruh.
+Each of the seven bytes in `n` have at least one byte in `keybytes` that is equal to it.
