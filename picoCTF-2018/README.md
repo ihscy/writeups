@@ -7,17 +7,17 @@ picoCTF: 2018-09-07 to 2018-10-12
 Our first CTF as a club!
 
 Team members:
-  - Claire Jung as ihscyber1,
-  - Ian Huang as imyxh,
-  - Jessica Ruan as jespiron,
-  - Neil Gupta as nog642,
-  - Robert Stevens as thebestrobert.
+  - Jessica Ruan as jespiron
+  - Ian Huang as imyxh
+  - Neil Gupta as nog642
+  - Robert Stevens as thebestrobert
+  - Claire Jung as ihscyber1
 
 |                         |                                               |
 | ----------------------: | :-------------------------------------------- |
 | **Team name:**          | ihscyber2[^1]                                 |
 | **Final score:**        | 32585                                         |
-| **Final rank:**         | tenth globally, third across US high schools  |
+| **Final rank:**         | 7th globally, 3rd across US high schools      |
 | **Unsolved problems:**  | freecalc, LambDash 3 (so close!), no args     |
 
 **Score progression:**
@@ -26,13 +26,13 @@ Team members:
 
 ### Write-ups
 
-- [binary](binary/README.md)
+- **Binary**
   - [cake](binary/cake/README.md)
-- [cryptography](cryptography/README.md)
+- **Cryptography**
   - [James Brahm Returns](cryptography/James\ Brahm\ Returns/README.md)
-- [general](general/README.md)
+- **General**
   - [Dog or Frog](general/Dog\ or\ Frog/README.md)
-- [reversing](reversing/README.md)
+- **Reversing**
   - [be-quick-or-be-dead-3](reversing/be-quick-or-be-dead-3/README.md)
   - [circuit123](reversing/circuit123/README.md)
 
