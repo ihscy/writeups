@@ -22,6 +22,14 @@ Team members:
 
 ### Write-ups
 
+- **Binary**
+  - [Tinder](https://blog.jimmyli.us/articles/2020-06/TJCTF-Binary-Exploitation)
+  - [Seashells](https://blog.jimmyli.us/articles/2020-06/TJCTF-Binary-Exploitation)
+  - [OSRS](https://blog.jimmyli.us/articles/2020-06/TJCTF-Binary-Exploitation)
+  - [El Primo](https://blog.jimmyli.us/articles/2020-06/TJCTF-Binary-Exploitation)
+  - [Stop](https://blog.jimmyli.us/articles/2020-06/TJCTF-Binary-Exploitation)
+  - [Cookie Library](https://blog.jimmyli.us/articles/2020-06/TJCTF-Binary-Exploitation)
+  - [Naughty](https://blog.jimmyli.us/articles/2020-06/TJCTF-Binary-Exploitation)
 - **Cryptography**
   - [Tap Dancing](cryptography/tap-dancing/README.md)
 - **Reversing**
@@ -30,4 +38,3 @@ Team members:
 -------------------------------------------------------------------------------
 
 [progression]: score-progression.png
-
