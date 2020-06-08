@@ -9,7 +9,7 @@ Team members:
   - Ian Huang as imyxh
   - Neil Gupta as nog642
   - Timothy Zhou as stackdynamic
-  - Cindy Zhou as x9du
+  - Cindy Zou as x9du
 
 |                         |                                              |
 | ----------------------: | :------------------------------------------- |
